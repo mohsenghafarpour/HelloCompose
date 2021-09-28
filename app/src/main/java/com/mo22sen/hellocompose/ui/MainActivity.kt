@@ -11,16 +11,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            InitMainActivity()
-            viewModel.fetchNews()
-        }
+        viewModel.fetchNews()
+        viewModel.news.observe(this, {
+            setContent {
+                InitMainActivity(viewModel)
+            }
+        })
+
     }
 }
-
 
 
 
